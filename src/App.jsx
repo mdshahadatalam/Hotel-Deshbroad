@@ -5,6 +5,7 @@ import { Banner } from './Component/Banner';
 import { About } from './Component/About';
 import { Room } from './Component/Room';
 import { Booking } from './Component/Booking';
+import { Service } from './Component/Service';
 
 function App() {
   const [menu, setMenu] = useState('Navbar');
@@ -32,7 +33,7 @@ function App() {
               <div className='p-3 m-3'>
                 {menu === "Banner" && <Banner />}
                 {menu === "Room" && <Room/>}
-                {menu === "Service" &&  <h1>services</h1> }
+                {menu === "Service" &&  <Service/> }
                 {menu === "AboutUs" && <About />}
                 {menu === "Booking" && <Booking/>}
               </div>
