@@ -8,6 +8,7 @@ export const Banner = () => {
   const [title,setTittle] = useState("")
   const [buttonText,setButtonText] =useState("")
   const [showButton,setShowButton] =useState(false)
+  const [id,setId] =useState("")
 
   const handleSubhead =(e)=>{
     setSubHead(e.target.value)
@@ -28,35 +29,52 @@ export const Banner = () => {
   }
 
   const handleSubmit =()=>{
-   axios.post('http://localhost:3000/banner',{
-    subHead:subHead,
-    head:head,
-    tittle:title,
-    buttonText:buttonText,
-    showButton:showButton,
-   }).then(res=>{console.log(res);
+    if(id){
+      axios.put('http://localhost:3000/banner/'+id,{
+        subHead:subHead,
+        head:head,
+        tittle:title,
+        buttonText:buttonText,
+        showButton:showButton,
+      }).then(res=>{
+        console.log(res.data)
+      }).catch(err=>{
+        console.log(err)
+      })
 
-    setSubHead('')
-    setHead('')
-    setTittle('')
-    setButtonText('')
-    setShowButton('')
-
-   }).catch(err=>{
-    console.log(err)
-   })    
+    }else{
+      axios.post('http://localhost:3000/banner',{
+        subHead:subHead,
+        head:head,
+        tittle:title,
+        buttonText:buttonText,
+        showButton:showButton,
+       }).then(res=>{console.log(res);
+    
+        setSubHead('')
+        setHead('')
+        setTittle('')
+        setButtonText('')
+        setShowButton('')
+    
+       }).catch(err=>{
+        console.log(err)
+       })    
+    }
+   
   }
 
 
  useEffect(()=>{
   async function data(){
     let data = await axios.get('http://localhost:3000/bannerItem')
-     console.log(data.data);
+    //  console.log(data.data);
      setSubHead(data.data.subHead)
      setHead(data.data.head)
      setTittle(data.data.tittle)
      setButtonText(data.data.buttonText)
      setShowButton(data.data.showButton)
+     setId(data.data._id)
      }
   data()
  },[])
