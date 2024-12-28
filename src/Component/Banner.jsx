@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 export const Banner = () => {
@@ -35,10 +35,31 @@ export const Banner = () => {
     buttonText:buttonText,
     showButton:showButton,
    }).then(res=>{console.log(res);
+
+    setSubHead('')
+    setHead('')
+    setTittle('')
+    setButtonText('')
+    setShowButton('')
+
    }).catch(err=>{
     console.log(err)
    })    
   }
+
+
+ useEffect(()=>{
+  async function data(){
+    let data = await axios.get('http://localhost:3000/bannerItem')
+     console.log(data.data);
+     setSubHead(data.data.subHead)
+     setHead(data.data.head)
+     setTittle(data.data.tittle)
+     setButtonText(data.data.buttonText)
+     setShowButton(data.data.showButton)
+     }
+  data()
+ },[])
 
   
  
@@ -52,7 +73,7 @@ export const Banner = () => {
       Subheading
     </label>
     <input
-    //   value={subhead}
+      value={subHead}
       onChange={handleSubhead}
       className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
       type="text"
@@ -66,7 +87,7 @@ export const Banner = () => {
      Heading
     </label>
     <input
-    //   value={head}
+      value={head}
       onChange={handleHeading}
       className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
       type="text"
@@ -80,7 +101,7 @@ export const Banner = () => {
      Tittle
     </label>
     <input
-    //   value={head}
+      value={title}
       onChange={handleTittle}
       className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
       type="text"
@@ -95,7 +116,7 @@ export const Banner = () => {
       Button Text
     </label>
     <input
-    //   value={buttonText}
+      value={buttonText}
       onChange={handleButtonText}
       className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
       type="text"
@@ -106,7 +127,7 @@ export const Banner = () => {
 
   <div className="mb-2 flex items-center">
     <input
-    //   checked={buttonShow}
+      checked={showButton}
       onChange={handleButtonShow}
      className="my-2 h-4 w-4 border-[#E0E0E0] rounded-sm focus:ring-2 focus:ring-indigo-500" type="checkbox" />
     <label className="text-sm ps-2 text-gray-700" >Show Button</label>
