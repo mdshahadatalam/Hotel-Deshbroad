@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <section className='font-serif py-5 h-screen bg-[#FFF5EF]'>
+      <section className='font-serif pt-2 h-screen bg-[#FFF5EF]'>
         <div className="container">
           <h4 className='text-center m-0'> Hotel Dashboard</h4>
           <div className="row">

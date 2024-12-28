@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify';
 
 export const Banner = () => {
 
@@ -38,8 +39,35 @@ export const Banner = () => {
         showButton:showButton,
       }).then(res=>{
         console.log(res.data)
+        setSubHead('')
+        setHead('')
+        setTittle('')
+        setButtonText('')
+        setShowButton('')
+        toast.success('Banner Updated', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          // transition: Bounce,
+          });
       }).catch(err=>{
         console.log(err)
+        toast.error('Please try again', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          // transition: Bounce,
+          });
       })
 
     }else{
@@ -56,6 +84,18 @@ export const Banner = () => {
         setTittle('')
         setButtonText('')
         setShowButton('')
+
+        toast.success('Banner Created', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          // transition: Bounce,
+          });
     
        }).catch(err=>{
         console.log(err)
@@ -83,6 +123,7 @@ export const Banner = () => {
  
   
   return (
+    <>
     <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto">
  <h4 className='font-serif text-center m-0'>Banner</h4>
 
@@ -160,5 +201,9 @@ export const Banner = () => {
     </button>
   </div>
 </div>
+
+<ToastContainer />
+</>
+
   )
 }
