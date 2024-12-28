@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 export const Banner = () => {
 
@@ -27,7 +28,16 @@ export const Banner = () => {
   }
 
   const handleSubmit =()=>{
-    console.log(head,subHead,title,buttonText,showButton)
+   axios.post('http://localhost:3000/banner',{
+    subHead:subHead,
+    head:head,
+    tittle:title,
+    buttonText:buttonText,
+    showButton:showButton,
+   }).then(res=>{console.log(res);
+   }).catch(err=>{
+    console.log(err)
+   })    
   }
 
   
