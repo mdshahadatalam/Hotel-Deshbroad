@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify';
 
 export const Room = () => {
   const [img,setImg] = useState("")
@@ -37,8 +38,36 @@ export const Room = () => {
 
     axios.post('http://localhost:3000/room',data).then(res=>{
       console.log(res)
+      setPrice('')
+      setSubHeading('')
+      setHead('')
+      setShowImg('')
+
+      toast.success('Room Created', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        // transition: Bounce,
+        });
     }).catch(err=>{
       console.log(err)
+      toast.error('Please try again', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+
     })
   }
 
@@ -50,6 +79,52 @@ export const Room = () => {
     }
     data()
   },[])
+
+  const handleDelete =(item)=>{
+  console.log(item._id);
+  axios.delete(`http://localhost:3000/room/${item._id}`).then(res=>{
+    console.log(res);
+
+    toast.success('Room Delete', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      // transition: Bounce,
+      });
+
+
+
+    async function data(){
+      let data = await axios.get('http://localhost:3000/roomItem')
+      console.log(data.data)
+      setList(data.data)
+     }
+     data()
+  }).catch(err=>{
+    console.log(err);
+    toast.error('Please try again', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      // transition: Bounce,
+      });
+    
+  })
+  
+  }
+
+
+
 
   return (
     <>
@@ -72,7 +147,7 @@ export const Room = () => {
       Price
     </label>
     <input
-      // value={date}
+      value={price}
       onChange={handlePrice}
       className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
       type="text"
@@ -86,7 +161,7 @@ export const Room = () => {
     Sub Heading
     </label>
     <input
-      //  value={subHead}
+       value={subHeading}
        onChange={handleSubHead}
       className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
       type="text"
@@ -100,7 +175,7 @@ export const Room = () => {
       Heading
     </label>
     <input
-      // value={head}
+      value={head}
       onChange={handleHead}
       className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
       type="text"
@@ -111,7 +186,7 @@ export const Room = () => {
 
   <div className="mb-2 flex items-center">
     <input
-    //  checked={showImg}
+     checked={showImg}
      onChange={handleImgShow}
      className="my-2 h-4 w-4 border-[#E0E0E0] rounded-sm focus:ring-2 focus:ring-indigo-500" type="checkbox" />
     <label className="text-sm ps-2 text-gray-700" htmlFor="show-button">Show Image</label>
@@ -146,13 +221,13 @@ export const Room = () => {
           list.map((item,index)=>(
             <tr>
             <td>{index+1}</td> 
-            <td><img src={`http://localhost:3000/${item.image}`} alt="image" width="50"/></td>
+            <td> { item.showImg === true ? <img src={`http://localhost:3000/${item.image}`} alt="image" width="50"/> : "Preview" } </td>
             <td>{item.subHead}</td>
             <td>{item.head}</td>
             <td>{item.Price}</td>
             <td class="action-buttons">
                 <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
+                <button onClick={()=>(handleDelete(item))} class="delete-btn">Delete</button>
             </td>
         </tr>
           ))
@@ -160,6 +235,8 @@ export const Room = () => {
         
     </tbody>
 </table>
+
+<ToastContainer />
 
 
     </>
