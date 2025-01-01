@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 export const Room = () => {
   const [img,setImg] = useState("")
@@ -22,7 +23,16 @@ export const Room = () => {
 
   const handleSubmit =()=>{
     console.log(price,subHeading,head,showImg)
-    
+    axios.post('http://localhost:3000/room',{
+    subHead:subHeading,
+    head:head,
+    Price:price,
+    showImg:showImg,
+    }).then(res=>{
+      console.log(res)
+    }).catch(err=>{
+      console.log(err)
+    })
   }
   return (
     <>
