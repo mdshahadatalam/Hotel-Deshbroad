@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 export const Room = () => {
@@ -20,20 +20,35 @@ export const Room = () => {
   const handleImgShow =(e)=>{
     setShowImg(e.target.checked)
   }
+  const handleFile =(e)=>{
+    setImg(e.target.files[0])
+  }
+  
 
   const handleSubmit =()=>{
     console.log(price,subHeading,head,showImg)
-    axios.post('http://localhost:3000/room',{
-    subHead:subHeading,
-    head:head,
-    Price:price,
-    showImg:showImg,
-    }).then(res=>{
+    let data = new FormData()
+    data.append("subHead",subHeading)
+    data.append("head",head)
+    data.append("Price",price)
+    data.append("showImg",showImg)
+    data.append("image",img)
+
+    axios.post('http://localhost:3000/room',data).then(res=>{
       console.log(res)
     }).catch(err=>{
       console.log(err)
     })
   }
+
+  useEffect(()=>{
+    async function data(){
+     let data = await axios.get('http://localhost:3000/roomItem')
+     console.log(data.data)
+    }
+    data()
+  },[])
+  
   return (
     <>
      <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto">
@@ -43,7 +58,7 @@ export const Room = () => {
       Upload File
     </label>
     <input
-      // onChange={handleFile}
+      onChange={handleFile}
       className="py-2 px-4 w-full border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
       type="file"
       id="file-upload"
