@@ -7,6 +7,7 @@ export const Room = () => {
   const [subHeading, setSubHeading] = useState("")
   const [head,setHead] = useState("")
   const [showImg,setShowImg] = useState(false)
+  const [list,setList] = useState([])
 
   const handlePrice =(e)=>{
     setPrice(e.target.value)
@@ -45,10 +46,11 @@ export const Room = () => {
     async function data(){
      let data = await axios.get('http://localhost:3000/roomItem')
      console.log(data.data)
+     setList(data.data)
     }
     data()
   },[])
-  
+
   return (
     <>
      <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto">
@@ -125,6 +127,40 @@ export const Room = () => {
     </button>
   </div>
 </div>
+
+{/* table  */}
+<table>
+    <thead>
+        <tr>
+            <th>Sr</th>
+            <th>Image</th>
+            <th>Head</th>
+            <th>SubHead</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {
+          list.map((item,index)=>(
+            <tr>
+            <td>{index+1}</td> 
+            <td><img src={`http://localhost:3000/${item.image}`} alt="image" width="50"/></td>
+            <td>{item.subHead}</td>
+            <td>{item.head}</td>
+            <td>{item.Price}</td>
+            <td class="action-buttons">
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+            </td>
+        </tr>
+          ))
+        }
+        
+    </tbody>
+</table>
+
 
     </>
   )
