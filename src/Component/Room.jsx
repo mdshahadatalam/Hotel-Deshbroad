@@ -15,6 +15,7 @@ export const Room = () => {
   const [head,setHead] = useState("")
   const [showImg,setShowImg] = useState(false)
   const [list,setList] = useState([])
+  const [id ,setID] = useState()
 
   const handlePrice =(e)=>{
     setPrice(e.target.value)
@@ -40,6 +41,7 @@ export const Room = () => {
     setHead(item.head)
     setShowImg(item.showImg)
     setImg(item.image)
+    setID(item._id)
     
   }
 
@@ -57,6 +59,40 @@ export const Room = () => {
     data.append("showImg",showImg)
     data.append("image",img)
 
+   if(id){
+    axios.put(`http://localhost:3000/rooms/${id}`,data).then(res=>{
+      console.log(res.data)
+      setPrice('')
+      setSubHeading('')
+      setHead('')
+      setShowImg('')
+      toast.success('Room Updated', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        // transition: Bounce,
+        });
+    }).catch(err=>{
+      console.log(err)
+      toast.error('Please try again', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        // transition: Bounce,
+        });
+    })
+
+   }else{
     axios.post('http://localhost:3000/room',data).then(res=>{
       console.log(res)
       setPrice('')
@@ -86,10 +122,11 @@ export const Room = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        transition: Bounce,
+        // transition: Bounce,
         });
 
     })
+   }
   }
 
   useEffect(()=>{
