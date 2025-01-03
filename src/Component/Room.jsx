@@ -187,7 +187,7 @@ export const Room = () => {
   return (
     <>
      <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto">
-     <p className='text-center text-xl text-slate-600'>Add your room here</p>
+     <p className='text-center text-xl text-slate-600'>Add your new room here</p>
     <div className="mb-2">
     <label className="block text-sm font-semibold text-gray-700 mb-2" htmlFor="file-upload">
       Upload File
