@@ -7,6 +7,7 @@ export const Service = () => {
   const [subHead,setSubHead] = useState("")
   const [paragraph,setParagraph] = useState("")
   const [showImg, setShowImg] = useState(false)
+  const [list,setList] = useState([])
 
    const handleFile =(e)=>{
     setImg(e.target.files[0])
@@ -34,10 +35,20 @@ export const Service = () => {
     }).catch(err=>{
       console.log(err)
      })
-
-
-
   }
+
+  useEffect(()=>{
+    async function data(){
+      let data = await axios.get('http://localhost:3000/serviceItem')
+      console.log(data.data)
+      setList(data.data)
+      
+    }
+    data()
+  },[])
+
+
+
   return (
     <>
     <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto">
@@ -101,6 +112,38 @@ export const Service = () => {
     </button>
   </div>
 </div>
+
+
+{/* table  */}
+<table>
+    <thead>
+        <tr>
+            <th>Sr</th>
+            <th>Image</th>
+            <th>SubHead</th>
+            <th>Paragraph</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        {
+          list.map((item,index)=>(
+            <tr>
+            <td>{index+1}</td> 
+            <td> { item.showImg === true ? <img src={`http://localhost:3000/${item.serImg}`} alt="image" width="70"/> : "Preview" } </td>
+            <td>{item.subHead}</td>
+            <td>{item.paragraph}</td>
+            <td class="action-buttons">
+                <button onClick={()=>(handleOpen(item))} class="edit-btn">Edit</button>
+                <button onClick={()=>(handleDelete(item))} class="delete-btn">Delete</button>
+            </td>
+        </tr>
+          ))
+        }
+        
+    </tbody>
+</table>
     </>
   )
 }
