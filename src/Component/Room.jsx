@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify';
+import { RxCross1 } from "react-icons/rx";
 
 export const Room = () => {
 
@@ -32,8 +33,18 @@ export const Room = () => {
   }
 
 
-  const handleOpen =()=>{
+  const handleOpen =(item)=>{
     setModal(true)
+    setPrice(item.Price)
+    setSubHeading(item.subHead)
+    setHead(item.head)
+    setShowImg(item.showImg)
+    setImg(item.image)
+    
+  }
+
+  const handleClose =()=>{
+    setModal(false)
   }
   
 
@@ -236,7 +247,7 @@ export const Room = () => {
             <td>{item.head}</td>
             <td>{item.Price}</td>
             <td class="action-buttons">
-                <button class="edit-btn">Edit</button>
+                <button onClick={()=>(handleOpen(item))} class="edit-btn">Edit</button>
                 <button onClick={()=>(handleDelete(item))} class="delete-btn">Delete</button>
             </td>
         </tr>
@@ -255,14 +266,19 @@ export const Room = () => {
 
   {
     modal === true ?  <div className='modalP'>
-    <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto">
-        <p className='text-center text-xl text-slate-600'>Add your room here</p>
+    <div className="p-6 bg-white rounded-lg shadow-lg w-full max-w-lg mx-auto position-relative">
+    <div>
+          <span onClick={handleClose} className='w-[32px] h-[32px]  bg-slate-200 d-inline-block rounded-full d-flex justify-center align-items-center cursor-pointer position-absolute top-2 right-2'><RxCross1 /></span>
+        </div>
+
+        <img width={50} className='img-fluid' src={`http://localhost:3000/${img}`} alt="image" />
+        <p className='text-center text-xl text-slate-600'>Update your room here</p>
        <div className="mb-2">
        <label className="block text-sm font-semibold text-gray-700 mb-2" htmlFor="file-upload">
          Upload File
        </label>
        <input
-         // onChange={handleFile}
+         onChange={handleFile}
          className="py-2 px-4 w-full border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
          type="file"
          id="file-upload"
@@ -274,8 +290,8 @@ export const Room = () => {
          Price
        </label>
        <input
-         // value={price}
-         // onChange={handlePrice}
+         value={price}
+         onChange={handlePrice}
          className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
          type="text"
          id="menu-name"
@@ -288,8 +304,8 @@ export const Room = () => {
        Sub Heading
        </label>
        <input
-         //  value={subHeading}
-         //  onChange={handleSubHead}
+          value={subHeading}
+          onChange={handleSubHead}
          className="w-full h-12 px-4 border border-[#E0E0E0] rounded-lg shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
          type="text"
          id="menu-name"
@@ -313,8 +329,8 @@ export const Room = () => {
     
      <div className="mb-2 flex items-center">
        <input
-       //  checked={showImg}
-       //  onChange={handleImgShow}
+        checked={showImg}
+        onChange={handleImgShow}
         className="my-2 h-4 w-4 border-[#E0E0E0] rounded-sm focus:ring-2 focus:ring-indigo-500" type="checkbox" />
        <label className="text-sm ps-2 text-gray-700" htmlFor="show-button">Show Image</label>
      </div>
@@ -322,7 +338,7 @@ export const Room = () => {
     
      <div className="mt-3 text-center">
        <button
-         //  onClick={handleSubmit}
+          onClick={handleSubmit}
          className="px-6 py-2 bg-indigo-600 text-white font-semibold text-sm rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
        >
          Submit
@@ -331,9 +347,6 @@ export const Room = () => {
     </div>
     </div>
       : null}
- 
- 
-<button className='btn btn-success' onClick={handleOpen}>open</button>
  
 
 <ToastContainer />
