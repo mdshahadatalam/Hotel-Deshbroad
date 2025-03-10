@@ -30,7 +30,7 @@ export const Service = () => {
     data.append('paragraph',paragraph)
     data.append('showImg',showImg)
 
-    axios.post('http://localhost:3000/service',data).then(res=>{
+    axios.post('https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/service',data).then(res=>{
       console.log(res)
     }).catch(err=>{
       console.log(err)
@@ -39,7 +39,7 @@ export const Service = () => {
 
   useEffect(()=>{
     async function data(){
-      let data = await axios.get('http://localhost:3000/serviceItem')
+      let data = await axios.get('https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/serviceItem')
       console.log(data.data)
       setList(data.data)
       
@@ -131,7 +131,7 @@ export const Service = () => {
           list.map((item,index)=>(
             <tr>
             <td>{index+1}</td> 
-            <td> { item.showImg === true ? <img src={`http://localhost:3000/${item.serImg}`} alt="image" width="70"/> : "Preview" } </td>
+            <td> { item.showImg === true ? <img src={`https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/${item.serImg}`} alt="image" width="70"/> : "Preview" } </td>
             <td>{item.subHead}</td>
             <td>{item.paragraph}</td>
             <td class="action-buttons">

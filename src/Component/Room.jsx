@@ -60,7 +60,7 @@ export const Room = () => {
     data.append("image",img)
 
    if(id){
-    axios.put(`http://localhost:3000/rooms/${id}`,data).then(res=>{
+    axios.put(`https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/rooms/${id}`,data).then(res=>{
       console.log(res.data)
       setPrice('')
       setSubHeading('')
@@ -93,7 +93,7 @@ export const Room = () => {
     })
 
    }else{
-    axios.post('http://localhost:3000/room',data).then(res=>{
+    axios.post('https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/room',data).then(res=>{
       console.log(res)
       setPrice('')
       setSubHeading('')
@@ -131,7 +131,7 @@ export const Room = () => {
 
   useEffect(()=>{
     async function data(){
-     let data = await axios.get('http://localhost:3000/roomItem')
+     let data = await axios.get('https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/roomItem')
      console.log(data.data)
      setList(data.data)
     }
@@ -140,7 +140,7 @@ export const Room = () => {
 
   const handleDelete =(item)=>{
   console.log(item._id);
-  axios.delete(`http://localhost:3000/room/${item._id}`).then(res=>{
+  axios.delete(`https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/room/${item._id}`).then(res=>{
     console.log(res);
 
     toast.success('Room Delete', {
@@ -158,7 +158,7 @@ export const Room = () => {
 
 
     async function data(){
-      let data = await axios.get('http://localhost:3000/roomItem')
+      let data = await axios.get('https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/roomItem')
       console.log(data.data)
       setList(data.data)
      }

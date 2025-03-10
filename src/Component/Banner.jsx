@@ -31,7 +31,7 @@ export const Banner = () => {
 
   const handleSubmit =()=>{
     if(id){
-      axios.put('http://localhost:3000/banner/'+id,{
+      axios.put('https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/banner/'+id,{
         subHead:subHead,
         head:head,
         tittle:title,
@@ -71,7 +71,7 @@ export const Banner = () => {
       })
 
     }else{
-      axios.post('http://localhost:3000/banner',{
+      axios.post('https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/banner',{
         subHead:subHead,
         head:head,
         tittle:title,
@@ -107,7 +107,7 @@ export const Banner = () => {
 
  useEffect(()=>{
   async function data(){
-    let data = await axios.get('http://localhost:3000/bannerItem')
+    let data = await axios.get('https://hotel-backend-git-main-md-shahadat-alams-projects.vercel.app/bannerItem')
     //  console.log(data.data);
      setSubHead(data.data.subHead)
      setHead(data.data.head)
